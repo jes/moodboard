@@ -159,12 +159,27 @@ function addImageToBoard(imageUrl) {
     
     document.getElementById('moodboard').appendChild(container);
     
-    // Add to state
+    // Simple initial position - center of viewport
+    const board = document.getElementById('moodboard');
+    const position = {
+        x: (board.offsetWidth / 2) - 125, // Center horizontally, assuming 250px default width
+        y: (board.offsetHeight / 2) - 100  // Center vertically, assuming 200px default height
+    };
+    
+    // Add to state with initial position
     moodboardState.images.push({
         url: imageUrl,
-        position: { x: 0, y: 0 },
-        size: { width: 200, height: 200 }
+        position: position,
+        size: { width: 250, height: 200 } // Default size
     });
+
+    // Apply position and size
+    container.style.width = '250px';
+    container.style.height = '200px';
+    container.style.transform = `translate(${position.x}px, ${position.y}px)`;
+    container.setAttribute('data-x', position.x);
+    container.setAttribute('data-y', position.y);
+    
     syncState();
 }
 
