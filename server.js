@@ -126,7 +126,7 @@ app.post('/api/upload-file', upload.single('image'), (req, res) => {
     });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10303;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 }); 
