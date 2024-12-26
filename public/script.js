@@ -109,8 +109,17 @@ function addImageToBoard(imageUrl) {
     const resizeHandle = document.createElement('div');
     resizeHandle.className = 'resize-handle';
     
+    // Add delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'delete-button';
+    deleteButton.innerHTML = '×'; // Using × symbol for delete
+    deleteButton.onclick = function() {
+        container.remove();
+    };
+    
     container.appendChild(img);
     container.appendChild(resizeHandle);
+    container.appendChild(deleteButton);
     
     document.getElementById('moodboard').appendChild(container);
 } 
