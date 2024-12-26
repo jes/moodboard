@@ -3,6 +3,8 @@ let moodboardState = {
     images: []
 };
 let syncStateTimeout = null;
+let syncCounter = 0;
+let currentSyncRequest = null;
 
 // Initialize interact.js for dragging and resizing
 interact('.image-container')
@@ -203,28 +205,43 @@ async function initMoodboard() {
 
 // Sync state with server
 async function syncState() {
-    // Clear any existing timeout
     if (syncStateTimeout) {
         clearTimeout(syncStateTimeout);
     }
 
-    // Set a new timeout
+    document.getElementById('syncStatus').classList.add('dirty');
+
     syncStateTimeout = setTimeout(async () => {
-        console.log('Syncing state:', moodboardId, moodboardState);
         if (!moodboardId) return;
         
+        syncCounter++;
+        const thisCounter = syncCounter;
+
+        if (currentSyncRequest) return;
+
         try {
-            await fetch(`/api/moodboard/${moodboardId}/update`, {
+            currentSyncRequest = fetch(`/api/moodboard/${moodboardId}/update`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(moodboardState)
             });
+
+            await currentSyncRequest;
+            
+            if (thisCounter === syncCounter) {
+                document.getElementById('syncStatus').classList.remove('dirty');
+            } else {
+                // If this wasn't the latest sync request, trigger another sync immediately
+                syncState();
+            }
         } catch (error) {
             console.error('Error syncing state:', error);
+        } finally {
+            currentSyncRequest = null;
         }
-    }, 1000); // 1 second delay
+    }, 1000);
 }
 
 function renderMoodboard() {

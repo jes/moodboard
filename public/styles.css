@@ -72,3 +72,23 @@ body {
 .image-container {
     position: relative;
 }
+
+.sync-status {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #2ecc71;
+    margin-right: 10px;
+    float: right;
+}
+
+.sync-status.dirty {
+    background-color: #f1c40f;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}

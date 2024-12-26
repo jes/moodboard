@@ -8,17 +8,17 @@
 </head>
 <body>
     <div class="input-container">
+        <div id="syncStatus" class="sync-status float-right"></div>
         <input type="text" id="imageUrl" placeholder="Enter image URL">
-        <button onclick="addImageFromUrl()">Add URL</button>
+        <button onclick="addImageFromUrl()">Add URL</button><br>
         <input type="file" id="imageFile" accept="image/*">
-        <button onclick="addImageFromFile()">Add File</button>
+        <button onclick="addImageFromFile()">Add File</button><br>
+        <button onclick="window.location.href='/'">New Moodboard</button>
     </div>
     
     <div id="moodboard" class="moodboard"></div>
 
     <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
     <script src="script.js"></script>
-
-    <button onclick="window.location.href='/'">New Moodboard</button>
 </body>
 </html> 
